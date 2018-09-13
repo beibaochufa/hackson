@@ -50,5 +50,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-test:4.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.43" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:druid:1.1.5" level="project" />
   </component>
 </module>
