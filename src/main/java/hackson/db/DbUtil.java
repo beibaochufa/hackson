@@ -2,7 +2,7 @@ package hackson.db;
 
 
 import hackson.dao.AdminUserDao;
-import hackson.usermodel.AdminUserModel;
+import hackson.model.AdminUserModel;
 
 import java.sql.*;
 

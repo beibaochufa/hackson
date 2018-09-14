@@ -1,4 +1,4 @@
-package hackson.entity;
+package hackson.test.entity;
 
 /**
  * Created by whh on 2018/9/13.

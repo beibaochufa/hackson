@@ -1,11 +1,11 @@
-package hackson.servlet;
+package hackson.controller;
 
 /**
  * Created by whh on 2018/9/13.
  */
 
 import hackson.dao.AdminUserDao;
-import hackson.usermodel.AdminUserModel;
+import hackson.model.AdminUserModel;
 import hackson.utils.StringUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/login")
-public class LoginServlet {
-
-    AdminUserDao adminUserDao = new AdminUserDao();
+public class LoginController {
 
     @RequestMapping(value = "/login")
     @ResponseBody
@@ -40,7 +38,7 @@ public class LoginServlet {
             mapResult.put("success", 201);
             mapResult.put("msg", "用户名和密码不能为空");
         } else {
-            AdminUserModel adminUser = adminUserDao.login(userName, password);
+            AdminUserModel adminUser = AdminUserDao.getInstance().login(userName, password);
             if (adminUser == null) {
                 mapResult.put("success", 201);
                 mapResult.put("msg", userName + password + "sda用户名或密码不正确");
@@ -67,14 +65,4 @@ public class LoginServlet {
         }
         return mapResult;
     }
-
-    // TODO: 2018/9/13 test
-//    public static void main(String[] srgs) {
-////monitor
-//        String pass = "gao!@#123qiang";
-//        String md5Pwd = EncryptUtils.md5Encrypt(pass);
-//
-//        System.out.println("md5=" + md5Pwd);
-//
-//    }
 }

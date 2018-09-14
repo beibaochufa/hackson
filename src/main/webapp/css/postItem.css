@@ -1,0 +1,42 @@
+.content{
+  height: 701px;
+  background-image: url("../images/bg.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.info{
+   width: 400px;
+  height: 380px;
+  background-color: rgba(0,0,0,0.5);
+  padding-top: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading {
+  width: 186px;
+  height: 70px;
+  color: aliceblue;
+  margin: 0 auto;
+}
+
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}

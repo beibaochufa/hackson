@@ -1,7 +1,6 @@
 package hackson;
 
-import hackson.entity.UserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import hackson.test.entity.UserInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

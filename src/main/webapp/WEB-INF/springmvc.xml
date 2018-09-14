@@ -8,28 +8,17 @@
     <!-- 扫描指定包带@Controller注解的类-->
     <context:component-scan base-package="hackson"/>
 
-    <!--&lt;!&ndash; 资源文件路径 &ndash;&gt;-->
-    <!--<mvc:resources location="/css/" mapping="/css/**"/>-->
-    <!--<mvc:resources location="/easyui/" mapping="/easyui/**"/>-->
-    <!--<mvc:resources location="/images/" mapping="/images/**"/>-->
-    <!--<mvc:resources location="/" mapping="/*.html"/>-->
-
     <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
     <mvc:annotation-driven/>
 
     <!-- 视图解析 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages"/>
+        <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
         <property name="viewClass"
                   value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
 
-    <!--视图解析器-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".html"/>
-    </bean>
     <!-- ajax json数据转换 -->
     <bean id="mappingJacksonHttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>

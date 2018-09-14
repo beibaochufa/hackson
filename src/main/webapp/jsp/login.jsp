@@ -12,12 +12,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>邮件收发系统登录</title>
-    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
-    <script type="text/javascript" src="easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="easyui/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+    <script type="text/javascript" src="../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../easyui/common.js"></script>
     <script type="text/javascript">
 
         function resetValue() {
@@ -61,8 +61,8 @@
 </head>
 <body>
 <div align="center" style="padding-top: 50px;">
-    <form id="fm" action="login/login" method="post">
-        <table width="740" height="500" background="images/login.jpg">
+    <form id="fm" action="/login/login" method="post">
+        <table width="740" height="500" background="../images/login.jpg">
             <tr height="180">
                 <td colspan="4"></td>
             </tr>

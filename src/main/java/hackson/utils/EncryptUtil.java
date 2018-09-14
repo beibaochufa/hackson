@@ -6,9 +6,9 @@ import java.security.MessageDigest;
 import java.util.*;
 
 
-public class EncryptUtils {
+public class EncryptUtil {
 
-    //private static final Logger logger = LoggerFactory.getLogger(EncryptUtils.class.getSimpleName());
+    //private static final Logger logger = LoggerFactory.getLogger(EncryptUtil.class.getSimpleName());
 
     /**
      * MD5 加密

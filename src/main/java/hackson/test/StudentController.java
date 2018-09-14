@@ -5,7 +5,6 @@ package hackson.test;
  */
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,7 +15,7 @@ public class StudentController {
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
     public ModelAndView student() {
-        return new ModelAndView("student", "command", new Student());
+        return new ModelAndView("/student.jsp", "command", new Student());
     }
 
     @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
@@ -26,6 +25,6 @@ public class StudentController {
         model.addAttribute("age", student.getAge());
         model.addAttribute("id", student.getId());
 
-        return "result";
+        return "/result.jsp";
     }
 }

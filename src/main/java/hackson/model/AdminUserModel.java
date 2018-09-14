@@ -1,4 +1,4 @@
-package hackson.usermodel;
+package hackson.model;
 
 import hackson.inte.PopulateTemplate;
 
