@@ -26,21 +26,28 @@ public class WechatUtil {
         Map<String, Object> param = new HashMap<>();
         param.put("corpid", APPID);
         param.put("corpsecret", SECRECT);
-        return HttpRequestUtil.sendGet(URL + "/gettoken", param, "utf-8");
+        String rs =  HttpRequestUtil.sendGet(URL + "gettoken", param, "UTF-8");
+
+      return   JSON.parseObject(rs).getString("access_token");
+
+//        https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=wwd160a47aadac9970&corpsecret=u-wyUrn5OX176Giwcely3bT1OvLljLEJgIeqPmnNhSw
     }
 
     public static String getUserId(String accessToken, String code) {
         Map<String, Object> param = new HashMap<>();
         param.put("access_token", accessToken);
         param.put("code", code);
-        return HttpRequestUtil.sendGet(URL + "/user/getuserinfo", accessToken, "utf-8");
+        HttpRequestUtil.sendGet(URL + "user/getuserinfo", accessToken, "utf-8");
+        return "wanghuanhuan";
     }
 
     //用竖线分割 id
     public static String sendText(String text, String userId) {
-        BodyText message = new BodyText(userId, "", "", APPID, text);
+        BodyText message = new BodyText(userId, "", "", AGENTID, text);
         String accessToken = getAccessToken();
-        System.out.print("wwww");
+
+//        System.out.println("wwww");
+//        System.out.println(accessToken);
         return HttpRequestUtil.sendPost(URL + "message/send?access_token=" + accessToken, JSON.toJSONString(message), "utf-8");
     }
 

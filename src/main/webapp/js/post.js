@@ -23,19 +23,18 @@ $(document).ready(function () {
                 dataType: 'json',
                 data: {username: $("#username").val(), phone: $("#phone").val(), postnumber: $("#postnumber").val()},//参数之间用“,” 逗号隔开。
                 error: function () {
-
                 },
                 success: function (data) {
-                    var result = eval("(" + data + ")");
-                    if (result.success == 200) {
-                        window.location.href = result.msg;
-                    } else {
-                        alert(result.msg);
-                        $.messager.alert("系统提示", result.msg);
-                    }
+                    alert(data)
+                    // var result = eval("(" + data + ")");
+                    // if (result.success == 200) {
+                    //     window.location.href = result.msg;
+                    // } else {
+                    //     alert(result.msg);
+                    //     $.messager.alert("系统提示", result.msg);
+                    // }
                 }
             });
-
         }
     });
 });

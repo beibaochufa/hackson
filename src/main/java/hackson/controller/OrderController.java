@@ -67,7 +67,6 @@ public class OrderController {
             return result;
         }
 
-
         boolean isAddSuccess = OrderDao.getInstance().insertOrderInfo(orderNumber, userName, phone, reachTime);
 
         if (!isAddSuccess) {
@@ -76,11 +75,15 @@ public class OrderController {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", new OrderModel(orderNumber, userName, phone));
-            result.put("success", 200);
-            result.put("msg", "录入成功");//列表页
 
-            WechatUtil.sendText("你的快递已到，请携带工卡前往邮件中心领取。", CommonUserDao.getInstance().getUserByPhone(phone).getUserId());
-            System.out.print("before");
+            String netRs = WechatUtil.sendText("你的快递已到，请携带工卡前往邮件中心领取。", CommonUserDao.getInstance().getUserByPhone(phone).getUserId());
+            if (null != netRs && !"".equals(netRs)) {
+                result.put("success", 200);
+                result.put("msg", "录入成功");//列表页
+            } else {
+                result.put("success", 203);
+                result.put("msg", "用户信息添加成功，但发送通知消息失败");
+            }
         }
         return result;
     }
