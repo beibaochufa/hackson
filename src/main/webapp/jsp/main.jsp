@@ -17,7 +17,7 @@
 <body>
 
 <div class="add">
-    <button class="btn btn-info" onclick="window.location.href='input_entry.jsp'">+ 添加</button>
+    <button class="btn btn-info" onclick="window.location.href='post.jsp'">+ 添加</button>
 </div>
 <div class="panel panel-default">
     <!-- Default panel contents -->

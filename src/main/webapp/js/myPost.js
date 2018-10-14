@@ -19,8 +19,8 @@ $(document).ready(function () {
             "doctorDevlement": "儿科",
             "hospitalName": "上海中山医院"
         }]
-    }
-    data.doctorList.map(order => createCard(order)).forEach(panel => $('#data').append(panel));
+    };
+    data.doctorList.map(createCard);
 
     function createCard(order) {
         var $panel = $('<div class="panel panel-info"></div>');
@@ -41,6 +41,7 @@ $(document).ready(function () {
         $body.append($btngroupjusty);
         $panel.append($head);
         $panel.append($body);
+        $('#data').append($panel)
         return $panel;
     }
 });

@@ -7,10 +7,10 @@ import org.springframework.util.StringUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by whh on 2018/9/14.
@@ -18,6 +18,8 @@ import java.util.Map;
 public class OrderDao {
     private final static OrderDao instance = new OrderDao();
     public static final String dbName = "hackson";
+    public static final SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 
     public static OrderDao getInstance() {
         return instance;
@@ -25,7 +27,7 @@ public class OrderDao {
 
     //录入邮件信息
     public boolean insertOrderInfo(String orderNumber, String userName, String phone, long reachTime) {
-        String sql = "insert into order_info(order_number,user_name,phone,reach_time)value(?,?,?,?)";
+        String sql = "insert into order_info(order_number,user_name,phone,reach_time) value (?,?,?,?)";
         int ires = 0;
         Connection con = null;
         PreparedStatement ps = null;
@@ -97,7 +99,7 @@ public class OrderDao {
                     map.put("orderNumber", rs.getInt("order_number"));
                     map.put("userName", rs.getString("user_name"));
                     map.put("phone", rs.getString("phone"));
-                    map.put("reachTime", rs.getString("reach_time"));
+                    map.put("reachTime", timeFormat.format(new Date(rs.getLong("reach_time"))));
                     list.add(map);
                 }
             }
@@ -119,5 +121,12 @@ public class OrderDao {
             }
         }
         return list;
+    }
+
+    public String getFormatterTime(long time) {
+        Date d = new Date(time);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        String data = formatter.format(d);
+        return data;
     }
 }

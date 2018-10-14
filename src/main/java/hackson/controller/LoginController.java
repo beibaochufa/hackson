@@ -41,7 +41,7 @@ public class LoginController {
             AdminUserModel adminUser = AdminUserDao.getInstance().login(userName, password);
             if (adminUser == null) {
                 mapResult.put("success", 201);
-                mapResult.put("msg", userName + password + "sda用户名或密码不正确");
+                mapResult.put("msg", "用户名或密码不正确");
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("currentUser", adminUser);

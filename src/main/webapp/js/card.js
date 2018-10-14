@@ -8,7 +8,8 @@ $(document).ready(function () {
         error: function () {
         },
         success: function (data) {
-                data.map(order => createTableTrTd(order)).forEach(panel => $('#data').append(panel));
+            //map 对 data 的每一项执行 map 里的函数
+            data.map(createTableTrTd);
         }
     });
 
@@ -28,6 +29,7 @@ $(document).ready(function () {
         $tr.append($tdOrderId);
         $tr.append($tdTime);
         $tr.append($operate);
+        $('#data').append($tr);
         return $tr;
     }
 });

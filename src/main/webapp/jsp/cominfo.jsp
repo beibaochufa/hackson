@@ -26,6 +26,9 @@
                         <input type="text" name="username" id="username" class="form-control" autofocus
                                placeholder="请输入姓名" value="">
                         <span class="help-block"></span>
+                        <%
+                            String userId = (String) session.getAttribute("userId");
+                        %>
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,7 +49,40 @@
 </div>
 <script src="../easyui/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-<script src="../js/post.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".form-signin").submit(function () {
+            $("div.form-group").removeClass("has-error");
+            $("span.help-block").text("");
+            if ($.trim($("#username").val()) == "") {
+                $("#username").parent().parent().addClass("has-error");
+                $("#username").val("");
+                $("#username").next().text("请输入姓名");
+                return false;
+            }
+            if ($.trim($("#phone").val()) == "") {
+                $("#phone").parent().parent().addClass("has-error");
+                $("#phone").val("");
+                $("#phone").next().text("请输入手机号");
+                return false;
+            }
+            if ($.trim($("#phone").val()) != "" && $.trim($("#username").val()) != "") {
+                $.ajax({
+                    url: "/add_user",
+                    <%--data: {userId:<%=userId%>, username: $("#username").val(), phone: $("#phone").val()},--%>
+                    data: {userId:"wanghuanhuan", username: $("#username").val(), phone: $("#phone").val()},
+                    async: true,
+                    method: "POST",
+                    dataType: 'json',
+                    success: function (result) {
+                        alert(result.msg);
+                    },
+                    error: {}
+                });
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

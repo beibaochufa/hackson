@@ -1,16 +1,10 @@
 package hackson.controller;
 
-import hackson.dao.AdminUserDao;
 import hackson.dao.CommonUserDao;
 import hackson.dao.OrderDao;
-import hackson.model.AdminUserModel;
-import hackson.model.CommonUserModel;
 import hackson.model.OrderModel;
 import hackson.utils.StringUtil;
 import hackson.utils.WechatUtil;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +24,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("order")
+@RequestMapping("/order")
 public class OrderController {
 
     @RequestMapping(value = "/getOrderList", method = RequestMethod.GET)
@@ -55,7 +49,7 @@ public class OrderController {
 
     @RequestMapping(value = "/add_order", method = RequestMethod.POST)
     public Map<String, Object> addOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<String, Object>();
 
         String orderNumber = request.getParameter("postnumber");
         String userName = request.getParameter("username");

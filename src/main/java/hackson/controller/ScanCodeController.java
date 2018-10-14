@@ -25,18 +25,18 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("scan_code")
+@RequestMapping("/scancode")
 public class ScanCodeController {
     CommonUserDao userDao = new CommonUserDao();
 
-    @RequestMapping(value = "/jump", method = RequestMethod.GET)
+    @RequestMapping(value = "/jump")
     @ResponseBody
     public Map<String, Object> jump(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> mapResult = new HashMap<>();
 
         //用户授权后会重定向到此页面，并携带 code 和 status
         String code = request.getParameter("code");
-        String status = request.getParameter("status");
+        String state = request.getParameter("state");
         String accessToken = WechatUtil.getAccessToken();
         if (StringUtil.isEmpty(accessToken) || StringUtil.isEmpty(code)) {
             mapResult.put("fail", 201);
@@ -50,27 +50,26 @@ public class ScanCodeController {
             mapResult.put("msg", "获取用户信息失败");
             return mapResult;
         }
+        System.out.println("获取用户信息失败ddd" + userId);
 
         CommonUserModel user = userDao.getUserById(userId);
         if (null == user) {
-            request.setAttribute("userId", userId);
-            mapResult.put("userId", userId);//用于之后存储 uerId
-            mapResult.put("success", 200);
-            mapResult.put("msg", "cominfo.jsp");//完善信息页
+            HttpSession session = request.getSession();
+            session.setAttribute("userId", userId);
+            System.out.println("获取用户信息失败");
+            response.sendRedirect("http://127.0.0.1:8080/jsp/cominfo.jsp");
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", user);
-
-            mapResult.put("success", 200);
-            mapResult.put("msg", "main.jsp");//列表页
+            System.out.println("获取用户信息成功");
+            response.sendRedirect("http://127.0.0.1:8080/jsp/mypost.jsp");
         }
-
         return mapResult;
     }
 
     @RequestMapping(value = "/add_user", method = RequestMethod.POST)
     public Map<String, Object> addUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<String, Object>();
 
         String userId = request.getParameter("userId");
         String userName = request.getParameter("userName");

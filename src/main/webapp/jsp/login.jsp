@@ -21,10 +21,8 @@
     <script type="text/javascript">
 
         function resetValue() {
-//            $("#userName").value = "";
-//            $("#password").value = "";
-            document.getElementById("userName").value = "";
-            document.getElementById("password").value = "";
+            $("#userName").val("");
+            $("#password").val("");
         }
 
         $(function () {
