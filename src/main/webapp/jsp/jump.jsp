@@ -39,8 +39,7 @@
         <img src="../images/loading.jpg">
     </div>
 </div>
-<script src="../easyui/jquery.min.js"></script>
+<script src="../easyui/jquery-3.3.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
-<script src="../js/blank.js"></script>
 </body>
 </html>

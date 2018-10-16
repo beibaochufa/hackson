@@ -21,8 +21,8 @@
     <script type="text/javascript">
 
         function resetValue() {
-            $("#userName").val("");
-            $("#password").val("");
+            $("#userName").value = "";
+            $("#password").value = "";
         }
 
         $(function () {
@@ -45,11 +45,11 @@
                     return $(this).form("validate");
                 },
                 success: function (data) {
-                    var result = eval("(" + data + ")");
-                    if (result.success == 200) {
+                    var result = JSON.parse(data);
+                    if (result.success === 200) {
                         window.location.href = result.msg;
                     } else {
-                        $.messager.alert("系统提示", result.msg);
+                        alert(result.msg);
                     }
                 }
             });

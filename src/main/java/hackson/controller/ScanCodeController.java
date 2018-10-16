@@ -68,6 +68,7 @@ public class ScanCodeController {
     }
 
     @RequestMapping(value = "/add_user", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String, Object> addUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> result = new HashMap<String, Object>();
 
@@ -95,6 +96,7 @@ public class ScanCodeController {
     }
 
     @RequestMapping(value = "/update_user", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String, Object> updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> result = new HashMap<>();
 
@@ -119,6 +121,10 @@ public class ScanCodeController {
             result.put("msg", "main.jsp");//列表页
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+
     }
 
 

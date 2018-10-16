@@ -38,9 +38,7 @@ public class WechatUtil {
         param.put("code", code);
         String response = HttpRequestUtil.sendGet(URL + "user/getuserinfo", param, "utf-8");
         JSONObject jsonObject = (JSONObject) JSONObject.parse(response);
-        String userId = jsonObject.getString("UserId");
-
-        return userId;
+        return jsonObject.getString("UserId");
     }
 
     //用竖线分割 id

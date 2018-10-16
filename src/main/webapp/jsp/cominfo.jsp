@@ -10,6 +10,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <title>提交用户信息</title>
+    <%
+        String userId = (String) session.getAttribute("userId");
+    %>
     <link rel="icon" href="../image/post-man.png" sizes="32x32">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/postItem.css">
@@ -26,9 +29,6 @@
                         <input type="text" name="username" id="username" class="form-control" autofocus
                                placeholder="请输入姓名" value="">
                         <span class="help-block"></span>
-                        <%
-                            String userId = (String) session.getAttribute("userId");
-                        %>
                     </div>
                 </div>
                 <div class="form-group">
@@ -47,7 +47,7 @@
         </div>
     </div>
 </div>
-<script src="../easyui/jquery.min.js"></script>
+<script src="../easyui/jquery-3.3.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -68,16 +68,18 @@
             }
             if ($.trim($("#phone").val()) != "" && $.trim($("#username").val()) != "") {
                 $.ajax({
-                    url: "/add_user",
-                    <%--data: {userId:<%=userId%>, username: $("#username").val(), phone: $("#phone").val()},--%>
-                    data: {userId:"wanghuanhuan", username: $("#username").val(), phone: $("#phone").val()},
-                    async: true,
+                    url: "/scancode/add_user",
+                    data: {userId:<%=userId%>, userName: $("#username").val(), phone: $("#phone").val()},
+                    async: false,
                     method: "POST",
                     dataType: 'json',
                     success: function (result) {
+                        if(result.success === 200)
+                            window.location.href=result.msg;
                         alert(result.msg);
                     },
-                    error: {}
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
                 });
             }
         });

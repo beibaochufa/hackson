@@ -48,11 +48,12 @@ public class OrderController {
 
 
     @RequestMapping(value = "/add_order", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String, Object> addOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> result = new HashMap<String, Object>();
 
-        String orderNumber = request.getParameter("postnumber");
-        String userName = request.getParameter("username");
+        String orderNumber = request.getParameter("postNumber");
+        String userName = request.getParameter("userName");
         String phone = request.getParameter("phone");
         long reachTime = System.currentTimeMillis();
         if (StringUtil.isEmpty(phone)) {
@@ -73,10 +74,10 @@ public class OrderController {
             String netRs = WechatUtil.sendText("你的快递已到，请携带工卡前往邮件中心领取。", CommonUserDao.getInstance().getUserByPhone(phone).getUserId());
             if (null != netRs && !"".equals(netRs)) {
                 result.put("success", 200);
-                result.put("msg", "录入成功");//列表页
+                result.put("msg", "发送消息成功");//列表页
             } else {
                 result.put("success", 203);
-                result.put("msg", "用户信息添加成功，但发送通知消息失败");
+                result.put("msg", "用户邮件信息添加成功，但发送通知消息失败");
             }
         }
         return result;
