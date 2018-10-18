@@ -47,7 +47,7 @@
                         <button type="submit" class="btn btn-primary">发送</button>
                     </div>
                     <div class="btn-group" role="group">
-                        <button type="button" onclick="window.location.href='main.jsp'" class="btn btn-primary">统计
+                        <button type="button" onclick="JavaScript:window.location.href='main.jsp'" class="btn btn-primary">统计
                         </button>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
         </div>
     </div>
 </div>
-<script src="../easyui/jquery-3.3.1.min.js"></script>
+<script src="../easyui/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script type="text/javascript">
 

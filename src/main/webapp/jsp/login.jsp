@@ -21,8 +21,9 @@
     <script type="text/javascript">
 
         function resetValue() {
-            $("#userName").value = "";
-            $("#password").value = "";
+            location.reload();//刷新页面
+//            $("#userName").value = "";
+//            $("#password").value = "";
         }
 
         $(function () {
@@ -47,7 +48,7 @@
                 success: function (data) {
                     var result = JSON.parse(data);
                     if (result.success === 200) {
-                        window.location.href = result.msg;
+                        JavaScript:window.location.href = result.msg;
                     } else {
                         alert(result.msg);
                     }

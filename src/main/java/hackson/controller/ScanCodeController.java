@@ -29,9 +29,19 @@ import java.util.Map;
 public class ScanCodeController {
     CommonUserDao userDao = new CommonUserDao();
 
+    // TODO: 2018/10/17 测试用，如果有正式域名则不需要
     @RequestMapping(value = "/jump")
     @ResponseBody
-    public Map<String, Object> jump(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void jump(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
+
+        response.sendRedirect("http://127.0.0.1:8080/jsp/blank.jsp?code=" + code + "&state=" + state);
+    }
+
+    @RequestMapping(value = "/route")
+    @ResponseBody
+    public Map<String, Object> route(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> mapResult = new HashMap<>();
 
         //用户授权后会重定向到此页面，并携带 code 和 status
@@ -56,13 +66,13 @@ public class ScanCodeController {
         if (null == user) {
             HttpSession session = request.getSession();
             session.setAttribute("userId", userId);
-            System.out.println("获取用户信息失败");
-            response.sendRedirect("http://127.0.0.1:8080/jsp/cominfo.jsp");
+            mapResult.put("success", 200);
+            mapResult.put("msg", "cominfo.jsp");//完善用户信息页
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", user);
-            System.out.println("获取用户信息成功");
-            response.sendRedirect("http://127.0.0.1:8080/jsp/mypost.jsp");
+            mapResult.put("success", 200);
+            mapResult.put("msg", "mypost.jsp");//列表页
         }
         return mapResult;
     }
@@ -90,7 +100,7 @@ public class ScanCodeController {
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", new CommonUserModel(userId, userName, phone));
             result.put("success", 200);
-            result.put("msg", "main.jsp");//列表页
+            result.put("msg", "mypost.jsp");//列表页
         }
         return result;
     }
@@ -118,7 +128,7 @@ public class ScanCodeController {
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", new CommonUserModel(userId, userName, phone));
             result.put("success", 200);
-            result.put("msg", "main.jsp");//列表页
+            result.put("msg", "mypost.jsp");//列表页
         }
         return result;
     }

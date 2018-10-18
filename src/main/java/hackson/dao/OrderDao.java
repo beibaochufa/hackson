@@ -25,19 +25,21 @@ public class OrderDao {
         return instance;
     }
 
-    //录入邮件信息
-    public boolean insertOrderInfo(String orderNumber, String userName, String phone, long reachTime) {
-        String sql = "insert into order_info(order_number,user_name,phone,reach_time) value (?,?,?,?)";
+    //根据操作更新邮件的操作信息
+    public boolean insertOrderInfo(String postNumber, String userName, String userId, String phone, long reachTime) {
+        //刚开始 status 都为 0
+        String sql = "insert into order_info(post_number,user_name,user_id,phone,reach_time,status) value (?,?,?,?,?,0)";
         int ires = 0;
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = DbUtil.instance().getCon(dbName);
             ps = con.prepareStatement(sql);
-            ps.setString(1, orderNumber);
+            ps.setString(1, postNumber);
             ps.setString(2, userName);
-            ps.setString(3, phone);
-            ps.setLong(4, reachTime);
+            ps.setString(3, userId);
+            ps.setString(4, phone);
+            ps.setLong(5, reachTime);
             ires = ps.executeUpdate();
             if (ires != 1) {
                 System.out.println("insertOrderInfo->插入insertOrderInfo失败");
@@ -63,20 +65,28 @@ public class OrderDao {
 
     //管理员权限：查询所有的快递信息，按照到达时间降序排列
     public List<Map<String, Object>> getAllOrders() {
-        String sql = "select * from order_info order by reach_time Desc";
+        //只显示未取件的快递
+        String sql = "select * from order_info where status = 0 order by reach_time Desc";
         return getAllOrdersBySql(sql);
     }
 
     //用户：按照名字查询快递
     public List<Map<String, Object>> getAllOrdersByUserName(String userName) {
-        String sql = "select * from order_info where user_name = ? order by reach_time  Desc";
+        //只显示未取件的快递
+        String sql = "select * from order_info where user_id = ? order by reach_time  Desc";
         return getAllOrdersBySql(sql, userName);
     }
 
-    //用户：按照名字查询快递
+    //用户：按照手机号查询快递
     public List<Map<String, Object>> getAllOrdersByPhone(String phone) {
         String sql = "select * from order_info where phone = ? order by reach_time  Desc";
         return getAllOrdersBySql(sql, phone);
+    }
+
+    //用户：按照userId查询快递
+    public List<Map<String, Object>> getAllOrdersByUserID(String userId) {
+        String sql = "select * from order_info where user_id = ? order by reach_time  Desc";
+        return getAllOrdersBySql(sql, userId);
     }
 
     //按照 sql 语句查询
@@ -88,18 +98,21 @@ public class OrderDao {
         try {
             con = DbUtil.instance().getCon(dbName);
             pstmt = con.prepareStatement(sql);
-            for (int i = 1; i <= condi.length; i++) {
-                pstmt.setString(i, condi[i]);
+            for (int i = 0; i < condi.length; i++) {
+                pstmt.setString(i + 1, condi[i]);
             }
 
             rs = pstmt.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
                     Map<String, Object> map = new HashMap<>();
-                    map.put("orderNumber", rs.getInt("order_number"));
+                    map.put("orderId", rs.getInt("order_id"));
+                    map.put("postNumber", rs.getString("post_number"));
                     map.put("userName", rs.getString("user_name"));
+                    map.put("userId", rs.getString("user_id"));
                     map.put("phone", rs.getString("phone"));
                     map.put("reachTime", timeFormat.format(new Date(rs.getLong("reach_time"))));
+                    map.put("status", rs.getInt("status"));//0 未领取，1：已领取
                     list.add(map);
                 }
             }
@@ -121,6 +134,39 @@ public class OrderDao {
             }
         }
         return list;
+    }
+
+    //更新邮件信息
+    public boolean updateOrderInfoByOrderID(String orderId, int operation) {
+        String sql = "UPDATE order_info SET status = ? WHERE order_id = ?";
+        int ires = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = DbUtil.instance().getCon(dbName);
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, operation);
+            ps.setString(2, orderId);
+            ires = ps.executeUpdate();
+            if (ires != 1) {
+                System.out.println("updateOrderInfoByOrderID->updateOrderInfoByOrderID 失败");
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("updateOrderInfoByOrderID->Exception：" + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e2) {
+            }
+        }
+        return true;
     }
 
     public String getFormatterTime(long time) {

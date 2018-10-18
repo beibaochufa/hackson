@@ -9,6 +9,7 @@ import java.sql.SQLException;
  * Created by whh on 2018/9/14.
  */
 public class OrderModel implements PopulateTemplate<OrderModel> {
+    private long orderId;
     private String orderNumber;
     private String userName;
     private String phone;
@@ -18,10 +19,17 @@ public class OrderModel implements PopulateTemplate<OrderModel> {
         this.orderNumber = orderNumber;
         this.userName = userName;
         this.phone = phone;
-        this.reachTime = reachTime;
     }
 
     public OrderModel() {
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 
     public String getOrderNumber() {
@@ -59,6 +67,7 @@ public class OrderModel implements PopulateTemplate<OrderModel> {
     @Override
     public OrderModel populateFromResultSet(ResultSet rs) {
         try {
+            this.orderId = rs.getLong("order_id");
             this.orderNumber = rs.getString("order_number");
             this.userName = rs.getString("user_name");
             this.phone = rs.getString("phone");

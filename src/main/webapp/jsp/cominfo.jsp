@@ -11,11 +11,55 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <title>提交用户信息</title>
     <%
-        String userId = (String) session.getAttribute("userId");
+        String userId;
+        if (null == session.getAttribute("userId")) {
+            response.sendRedirect("../index.jsp");
+            return;
+        } else {
+            userId = (String) session.getAttribute("userId");
+        }
     %>
     <link rel="icon" href="../image/post-man.png" sizes="32x32">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/postItem.css">
+    <script type="text/javascript">
+        //todo 增加验证手机号的校验，必须 11 位
+        function submitInfo() {
+            $("div.form-group").removeClass("has-error");
+            $("span.help-block").text("");
+            if ($.trim($("#username").val()) == "") {
+                $("#username").parent().parent().addClass("has-error");
+                $("#username").val("");
+                $("#username").next().text("请输入姓名");
+                return false;
+            }
+            if ($.trim($("#phone").val()) == "") {
+                $("#phone").parent().parent().addClass("has-error");
+                $("#phone").val("");
+                $("#phone").next().text("请输入手机号");
+                return false;
+            }
+            if ($.trim($("#phone").val()) != "" && $.trim($("#username").val()) != "") {
+                $.ajax({
+                    url: "/scancode/add_user",
+                    data: {userId: "<%=userId%>", userName: $("#username").val(), phone: $("#phone").val()},
+                    async: false,
+                    method: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        if (null === data)
+                            return;
+                        if (data.success === 200) {
+                            alert("更新成功！");
+                            JavaScript:window.location.href = data.msg;//有时会失效
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 
 </head>
 <body>
@@ -39,7 +83,7 @@
                 </div>
                 <div class="form-group">
                     <div>
-                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="发送">
+                        <input onclick="submitInfo()" class="btn btn-primary btn-lg btn-block" value="提交">
                         <p id="tip"></p>
                     </div>
                 </div>
@@ -47,43 +91,46 @@
         </div>
     </div>
 </div>
-<script src="../easyui/jquery-3.3.1.min.js"></script>
+<script src="../easyui/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".form-signin").submit(function () {
-            $("div.form-group").removeClass("has-error");
-            $("span.help-block").text("");
-            if ($.trim($("#username").val()) == "") {
-                $("#username").parent().parent().addClass("has-error");
-                $("#username").val("");
-                $("#username").next().text("请输入姓名");
-                return false;
-            }
-            if ($.trim($("#phone").val()) == "") {
-                $("#phone").parent().parent().addClass("has-error");
-                $("#phone").val("");
-                $("#phone").next().text("请输入手机号");
-                return false;
-            }
-            if ($.trim($("#phone").val()) != "" && $.trim($("#username").val()) != "") {
-                $.ajax({
-                    url: "/scancode/add_user",
-                    data: {userId:<%=userId%>, userName: $("#username").val(), phone: $("#phone").val()},
-                    async: false,
-                    method: "POST",
-                    dataType: 'json',
-                    success: function (result) {
-                        if(result.success === 200)
-                            window.location.href=result.msg;
-                        alert(result.msg);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    }
-                });
-            }
-        });
-    });
+    <%--$(document).ready(function () {--%>
+    <%--//todo 增加验证手机号的校验，必须 11 位--%>
+    <%--$(".form-signin").submit(function () {--%>
+    <%--$("div.form-group").removeClass("has-error");--%>
+    <%--$("span.help-block").text("");--%>
+    <%--if ($.trim($("#username").val()) == "") {--%>
+    <%--$("#username").parent().parent().addClass("has-error");--%>
+    <%--$("#username").val("");--%>
+    <%--$("#username").next().text("请输入姓名");--%>
+    <%--return false;--%>
+    <%--}--%>
+    <%--if ($.trim($("#phone").val()) == "") {--%>
+    <%--$("#phone").parent().parent().addClass("has-error");--%>
+    <%--$("#phone").val("");--%>
+    <%--$("#phone").next().text("请输入手机号");--%>
+    <%--return false;--%>
+    <%--}--%>
+    <%--if ($.trim($("#phone").val()) != "" && $.trim($("#username").val()) != "") {--%>
+    <%--$.ajax({--%>
+    <%--url: "/scancode/add_user",--%>
+    <%--data: {userId: "<%=userId%>", userName: $("#username").val(), phone: $("#phone").val()},--%>
+    <%--async: false,--%>
+    <%--method: "POST",--%>
+    <%--dataType: 'json',--%>
+    <%--success: function (data) {--%>
+    <%--if (null === data)--%>
+    <%--return;--%>
+    <%--if (data.success === 200) {--%>
+    <%--window.location.href = "mypost.jsp";--%>
+    <%--} else {--%>
+    <%--alert(data.msg);--%>
+    <%--}--%>
+    <%--}--%>
+    <%--});--%>
+    <%--}--%>
+    <%--});--%>
+    <%--});--%>
 </script>
 
 </body>
